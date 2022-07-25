@@ -1,0 +1,11 @@
+
+name: skimage-sift-registration
+display_name: SIFTReg
+contributions:
+  commands: 
+    - id: skimage-sift-registration.make_magic_widget
+      python_name: skimage_sift_registration._widget:example_magic_widget
+      title: Affine registration with SIFT keypoints
+  widgets:
+    - command: skimage-sift-registration.make_magic_widget
+      display_name: Affine registration with SIFT keypoints
