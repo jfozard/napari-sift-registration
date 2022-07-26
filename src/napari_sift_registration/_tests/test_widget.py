@@ -5,7 +5,7 @@ import numpy.random as npr
 
 import pytest
 from skimage.io import imread, imsave
-from napari_sift_registration import example_magic_widget
+from napari_sift_registration._widget import example_magic_widget
 
 from skimage import data
 from skimage.util import img_as_float
