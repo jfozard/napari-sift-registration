@@ -20,7 +20,7 @@ For typical images, many of these correspondances will be wrong. To reduce these
 The plugin outputs two points layers, one for each image, containing all the corresponding SIFT keypoints betwee the two images, highlighting (and labelling) those that were retained as inliers after RANSAC matching. It also uses the estimated affine transformation between the two images to deform the "moving" image layer onto the "fixed" image layer.
 
 This approach is an attempt to provide similar functionality to the Stephan Saalfeld's Fiji "Extract SIFT Correspondences" plugin [extract], and more-or-less
-just provides a napari interface to the existing routines in scikit-image. There are great examples in the scikit-image documentation (e.g. [SIFT-example] and [RANSAC-example])
+just provides a napari interface to the existing routines in scikit-image. There are great examples in the scikit-image documentation (e.g. [SIFT-example] and [RANSAC-example]) that can be used if you would like to use these routines in your own analysis scripts.
 
 
 ## Installation
