@@ -15,19 +15,21 @@ This [napari] plugin was generated with [Cookiecutter] using [@napari]'s [cookie
 It uses the [scikit-image] SIFT keypoint detection routines to find distinctive image points and generate local descriptions of the image around them.
 Correspondences between the two images are then found by looking for pairs of keypoints, one in each of the two images, with closely matching descriptors.
 
-[![moving image](example_data/test1.png)]
-[![fixed image](example_data/test2.png)]
+![moving image](test_data/test1.png)
+![fixed image](test_data/test2.png)
+
 Artificial data 
 
 
 For typical images, many of these correspondences will be wrong. To reduce these false correspondences, the plugin applies the RANSAC algorithm. This randomly selects a small subset of the matching pairs of keypoints, estimates the affine transformation between this subset of keypoints, and then evaluates how many of the other pairs of keypoints also closely agree with this affine transformation ("inliers"). A large number of random samples are tested, and the transformation with the most inliers retained.
 
-[![moving image with inlier keypoints](doc/moving_keypoints.png)]
-[![fixed image with inlier keypoints](doc/fixed_keypoints.png)]
+![moving image with inlier keypoints](doc/moving_keypoints.png)
+![fixed image with inlier keypoints](doc/fixed_keypoints.png)
+
 Moving and fixed images showing inlier keypoints after RANSAC
 
 
-The plugin outputs two points layers, one for each image, containing all the corresponding SIFT keypoints betwee the two images, highlighting (and labelling) those that were retained as inliers after RANSAC matching. It also uses the estimated affine transformation between the two images to deform the "moving" image layer onto the "fixed" image layer.
+The plugin outputs two points layers, one for each image, containing all the corresponding SIFT keypoints betwee the . It also uses the estimated affine transformation between the two images to deform the "moving" image layer onto the "fixed" image layer.
 
 This approach is an attempt to provide similar functionality to the Stephan Saalfeld's Fiji "Extract SIFT Correspondences" plugin [extract], and more-or-less
 just provides a napari interface to the existing routines in scikit-image. There are great examples in the scikit-image documentation (e.g. [SIFT-example] and [RANSAC-example]) that can be used if you would like to use these routines in your own analysis scripts.
