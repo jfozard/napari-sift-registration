@@ -52,7 +52,7 @@ def SIFT_registration(A, B, params):
     # Apply transformation to image
     warpA = np.ascontiguousarray(warp(A.T, transform_robust.inverse, order = 1, mode = "constant", cval = 0, clip = True, preserve_range = True).T)
 
-    return keypointsA, keypointsB, matchesAB, inliers, warpA
+    return keypointsA, keypointsB, matchesAB, inliers, warpA, transform_robust
 
 @magic_factory(img_layer_moving={'label': 'Moving image layer', 'tooltip': 'Name of moving image'}, 
                img_layer_fixed={'label':'Fixed image layer', 'tooltip': 'Name of fixed image layer'},
@@ -77,6 +77,8 @@ def SIFT_registration(A, B, params):
                                      'tooltip':  'Distance for points to be inliers in RANSAC model'},
                max_trials = {'label': 'Maximum number of trials in RANSAC model',
                              'tooltip': 'Maximum number of trials in RANSAC model'},
+               only_show_inliers = {'label': 'Only show inlier keypoints',
+                             'tooltip': 'Only show keypoints which are inliers after RANSAC'},
                           )
 def example_magic_widget(viewer: 'napari.viewer.Viewer',
                          img_layer_moving: 'napari.layers.Layer',
@@ -91,6 +93,7 @@ def example_magic_widget(viewer: 'napari.viewer.Viewer',
                          min_samples:int=5,
                          residual_threshold:float=2.0,
                          max_trials:int=1000,
+                         only_show_inliers:bool=True,
                          ):
                          
     A = img_layer_moving.data
@@ -111,32 +114,42 @@ def example_magic_widget(viewer: 'napari.viewer.Viewer',
 
     
     def update_viewer(r):
-        keypointsA, keypointsB, matchesAB, inliers, warpA = r
-        print('update_viewer')
-        
-        moving_labels_base = np.cumsum(inliers)
-        moving_labels = [ str(moving_labels_base[i]) if inliers[i] else '' for i in range(len(inliers)) ]
-        viewer.add_points(keypointsA[matchesAB[:,0]],
-                          face_color='inliers',
-                          face_color_cycle=['magenta', 'green'],
-                          properties={'inliers': inliers, 'label': moving_labels }, name='Keypoints Moving', text='{label}')
+        keypointsA, keypointsB, matchesAB, inliers, warpA, transform_robust = r
 
-        fixed_labels_base = np.cumsum(inliers)
-        fixed_labels = [ str(fixed_labels_base[i]) if inliers[i] else '' for i in range(len(inliers)) ]
+        if not only_show_inliers:
+            moving_labels_base = np.cumsum(inliers)
+            moving_labels = [ str(moving_labels_base[i]) if inliers[i] else '' for i in range(len(inliers)) ]
+            viewer.add_points(keypointsA[matchesAB[:,0]],
+                              face_color='inliers',
+                              face_color_cycle=['magenta', 'green'],
+                              properties={'inliers': inliers, 'label': moving_labels }, name='Keypoints Moving', text='{label}')
 
-        viewer.add_points(keypointsB[matchesAB[:,1]],
-                          face_color='inliers',
-                          face_color_cycle=['magenta', 'green'],
-                          properties={'inliers': inliers, 'label':fixed_labels }, name='Keypoints Fixed', text='{label}')
+            fixed_labels_base = np.cumsum(inliers)
+            fixed_labels = [ str(fixed_labels_base[i]) if inliers[i] else '' for i in range(len(inliers)) ]
 
+            viewer.add_points(keypointsB[matchesAB[:,1]],
+                              face_color='inliers',
+                              face_color_cycle=['magenta', 'green'],
+                              properties={'inliers': inliers, 'label':fixed_labels }, name='Keypoints Fixed', text='{label}')
+
+        else:
+            N_inliers = np.sum(inliers)
+            all_labels = [str(i) for i in range(N_inliers)]
+            viewer.add_points(keypointsA[matchesAB[inliers,0]],
+                              properties={ 'label': all_labels }, name='Keypoints Moving', text='{label}')
+
+            viewer.add_points(keypointsB[matchesAB[inliers,1]],
+                              properties={'label':all_labels }, name='Keypoints Fixed', text='{label}')
+
+            
         viewer.add_image(warpA, name='Warped Moving Image')
-        print('done_update')
+
+        print('Transform: ', transform_robust)
         
     worker = SIFT_registration(A, B, params)
 
     worker.returned.connect(update_viewer)
     worker.start()
     
-    print('STARTED WORKER', worker, dir(worker), worker.abort_requested, worker.is_running)
     return worker
 
