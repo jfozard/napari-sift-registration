@@ -1,11 +1,11 @@
 # skimage-sift-registration
 
-[![License BSD-3](https://img.shields.io/pypi/l/skimage-sift-registration.svg?color=green)](https://github.com/jfozard/skimage-sift-registration/raw/main/LICENSE)
-[![PyPI](https://img.shields.io/pypi/v/skimage-sift-registration.svg?color=green)](https://pypi.org/project/skimage-sift-registration)
-[![Python Version](https://img.shields.io/pypi/pyversions/skimage-sift-registration.svg?color=green)](https://python.org)
-[![tests](https://github.com/jfozard/skimage-sift-registration/workflows/tests/badge.svg)](https://github.com/jfozard/skimage-sift-registration/actions)
-[![codecov](https://codecov.io/gh/jfozard/skimage-sift-registration/branch/main/graph/badge.svg)](https://codecov.io/gh/jfozard/skimage-sift-registration)
-[![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/skimage-sift-registration)](https://napari-hub.org/plugins/skimage-sift-registration)
+[![License BSD-3](https://img.shields.io/pypi/l/napari-sift-registration.svg?color=green)](https://github.com/jfozard/napari-sift-registration/raw/main/LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/napari-sift-registration.svg?color=green)](https://pypi.org/project/napari-sift-registration)
+[![Python Version](https://img.shields.io/pypi/pyversions/napari-sift-registration.svg?color=green)](https://python.org)
+[![tests](https://github.com/jfozard/napari-sift-registration/workflows/tests/badge.svg)](https://github.com/jfozard/napari-sift-registration/actions)
+[![codecov](https://codecov.io/gh/jfozard/napari-sift-registration/branch/main/graph/badge.svg)](https://codecov.io/gh/jfozard/napari-sift-registration)
+[![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-sift-registration)](https://napari-hub.org/plugins/napari-sift-registration)
 
 Simple plugin for 2D keypoint detection, and affine registration with RANSAC.
 
@@ -60,7 +60,7 @@ the coverage at least stays the same before you submit a pull request.
 ## License
 
 Distributed under the terms of the [BSD-3] license,
-"skimage-sift-registration" is free and open source software
+"napari-sift-registration" is free and open source software
 
 ## Issues
 
@@ -85,7 +85,7 @@ If you encounter any problems, please [file an issue] along with a detailed desc
 [scikit-image-match_descriptors]: https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.match_descriptors
 [scikit-image-RANSAC]: https://scikit-image.org/docs/stable/api/skimage.measure.html#skimage.measure.ransac
 
-[file an issue]: https://github.com/jfozard/skimage-sift-registration/issues
+[file an issue]: https://github.com/jfozard/napari-sift-registration/issues
 
 [napari]: https://github.com/napari/napari
 [tox]: https://tox.readthedocs.io/en/latest/
